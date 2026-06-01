@@ -1,0 +1,88 @@
+.container {
+  position: fixed;
+  top: var(--space-5);
+  right: var(--space-5);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  max-width: 380px;
+  pointer-events: none;
+}
+
+.toast {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius);
+  background: var(--bg-panel-raised);
+  border: 1px solid var(--border-default);
+  box-shadow: var(--shadow-raised);
+  cursor: pointer;
+  pointer-events: auto;
+  animation: toast-in 0.25s ease both;
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: var(--font-display);
+}
+
+.message {
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--text-primary);
+}
+
+/* Varyantlar — sol kenarlık + ikon rengi */
+.error {
+  border-left: 3px solid var(--status-crit);
+}
+.error .icon {
+  background: var(--status-crit);
+  color: var(--bg-void);
+}
+
+.success {
+  border-left: 3px solid var(--status-ok);
+}
+.success .icon {
+  background: var(--status-ok);
+  color: var(--bg-void);
+}
+
+.info {
+  border-left: 3px solid var(--status-info);
+}
+.info .icon {
+  background: var(--status-info);
+  color: var(--bg-void);
+}
+
+@media (max-width: 600px) {
+  .container {
+    left: var(--space-4);
+    right: var(--space-4);
+    max-width: none;
+  }
+}

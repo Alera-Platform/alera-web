@@ -1,0 +1,132 @@
+.card {
+  display: block;
+  padding: var(--space-4);
+  background-color: var(--color-bg-surface);
+  border: 1px solid var(--color-border-subtle);
+  border-left-width: 3px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-xs);
+  text-decoration: none;
+  transition:
+    box-shadow var(--duration-fast) var(--easing-standard),
+    transform var(--duration-fast) var(--easing-standard),
+    border-color var(--duration-fast) var(--easing-standard);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-1px);
+  text-decoration: none;
+}
+
+/* Genel sağlık → sol kenarlık rengi */
+.overall_ok {
+  border-left-color: var(--color-success);
+}
+.overall_attention {
+  border-left-color: var(--color-warning);
+}
+.overall_critical {
+  border-left-color: var(--color-danger);
+}
+.overall_no-data {
+  border-left-color: var(--color-border-default);
+}
+
+/* Üst satır */
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-3);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.nameWrap {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.name {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.healthBadge {
+  flex-shrink: 0;
+  font-size: 10px;
+  font-weight: var(--weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 3px var(--space-2);
+  border-radius: var(--radius-full);
+}
+
+.badge_ok {
+  color: var(--color-success);
+  background-color: var(--color-success-subtle);
+}
+.badge_attention {
+  color: var(--color-warning);
+  background-color: var(--color-warning-subtle);
+}
+.badge_critical {
+  color: var(--color-danger);
+  background-color: var(--color-danger-subtle);
+}
+.badge_no-data {
+  color: var(--color-text-tertiary);
+  background-color: var(--color-bg-subtle);
+}
+
+/* Durum satırları */
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.rowLabel {
+  font-size: var(--text-xs);
+  color: var(--color-text-tertiary);
+}
+
+.rowValue {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-text-secondary);
+}
+
+.rowHighlight {
+  color: var(--color-warning);
+  font-weight: var(--weight-semibold);
+}
+
+.rowDetail {
+  font-weight: var(--weight-regular);
+  color: var(--color-text-tertiary);
+  font-size: var(--text-xs);
+}
+
+/* Aktivite açıklaması */
+.description {
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-border-subtle);
+  font-size: var(--text-xs);
+  color: var(--color-text-tertiary);
+  line-height: var(--leading-normal);
+}

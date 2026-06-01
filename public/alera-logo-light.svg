@@ -1,0 +1,25 @@
+<svg width="280" height="64" viewBox="0 0 280 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <title>Alera — Light Mode Logo</title>
+
+  <!-- Mark (64×64) -->
+  <g transform="translate(8, 0) scale(0.348)">
+    <circle cx="92" cy="92" r="82.8" stroke="#0047AB" stroke-width="3.68" opacity="0.22" fill="none"/>
+    <path opacity="0.12" d="M92 46C64.4 46 46 64.4 46 92C46 128.8 92 156.4 92 156.4C92 156.4 138 128.8 138 92C138 64.4 119.6 46 92 46Z" fill="#0047AB"/>
+    <path d="M92 36.8V147.2M36.8 92H147.2" stroke="#0047AB" stroke-width="3.68" stroke-linecap="round" opacity="0.45"/>
+    <path d="M92 55.2V128.8M55.2 92H128.8" stroke="#0047AB" stroke-width="14.72" stroke-linecap="round"/>
+  </g>
+
+  <!-- Divider -->
+  <line x1="78" y1="18" x2="78" y2="46" stroke="#d0d8ea" stroke-width="1" stroke-linecap="round"/>
+
+  <!-- Wordmark -->
+  <text
+    x="92"
+    y="43"
+    font-family="'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+    font-size="26"
+    font-weight="600"
+    letter-spacing="-0.8"
+    fill="#151c2e"
+  >Alera</text>
+</svg>

@@ -1,0 +1,127 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  font-weight: var(--weight-medium);
+  cursor: pointer;
+  white-space: nowrap;
+  user-select: none;
+  transition:
+    background-color var(--duration-fast) var(--easing-standard),
+    border-color var(--duration-fast) var(--easing-standard),
+    color var(--duration-fast) var(--easing-standard),
+    box-shadow var(--duration-fast) var(--easing-standard),
+    transform var(--duration-fast) var(--easing-standard);
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.btn:not(:disabled):active {
+  transform: translateY(1px);
+}
+
+/* Boyutlar */
+.size_sm {
+  height: 28px;
+  padding: 0 var(--space-3);
+  font-size: var(--text-xs);
+}
+.size_md {
+  height: 36px;
+  padding: 0 var(--space-4);
+  font-size: var(--text-sm);
+}
+.size_lg {
+  height: 44px;
+  padding: 0 var(--space-5);
+  font-size: var(--text-base);
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.label {
+  display: inline-flex;
+  align-items: center;
+}
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.icon svg {
+  width: 1em;
+  height: 1em;
+}
+
+/* PRIMARY — ana aksiyon */
+.variant_primary {
+  background-color: var(--color-accent);
+  color: var(--color-accent-fg);
+  border-color: var(--color-accent);
+}
+.variant_primary:not(:disabled):hover {
+  background-color: var(--color-accent-hover);
+  border-color: var(--color-accent-hover);
+}
+
+/* SECONDARY — nötr */
+.variant_secondary {
+  background-color: var(--color-bg-surface);
+  color: var(--color-text-primary);
+  border-color: var(--color-border-default);
+}
+.variant_secondary:not(:disabled):hover {
+  background-color: var(--color-bg-hover);
+  border-color: var(--color-border-strong);
+}
+
+/* GHOST — transparan, iconly veya zayıf vurgu */
+.variant_ghost {
+  background-color: transparent;
+  color: var(--color-text-secondary);
+}
+.variant_ghost:not(:disabled):hover {
+  background-color: var(--color-bg-hover);
+  color: var(--color-text-primary);
+}
+
+/* DANGER — destruktif aksiyon */
+.variant_danger {
+  background-color: var(--color-danger);
+  color: var(--color-text-inverse);
+  border-color: var(--color-danger);
+}
+.variant_danger:not(:disabled):hover {
+  filter: brightness(0.92);
+}
+
+/* Loading state — spinner */
+.spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+.loading .label {
+  opacity: 0.7;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

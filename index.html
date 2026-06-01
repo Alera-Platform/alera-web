@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/alera-icon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Alera — İzleme Platformu</title>
+
+    <!--
+      FOUC önleme: tema seçimi tarayıcıda CSS yüklenmeden önce uygulanır.
+      Aksi halde dark tercih eden kullanıcı bir an light flash görür.
+
+      Ayrıca 'no-transitions' sınıfı eklenir: ilk boyamada body/glow
+      transition'larının tetiklenip renk/opacity "kaymasını" (flicker)
+      engeller. main.tsx ilk render sonrası bu sınıfı kaldırır.
+    -->
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem('alera-theme');
+          var theme = stored === 'dark' || stored === 'light'
+            ? stored
+            : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+          document.documentElement.setAttribute('data-theme', theme);
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+        document.documentElement.classList.add('no-transitions');
+      })();
+    </script>
+
+    <!-- Inter — modern, okunaklı, neredeyse her platform standardı -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <a
+      href="#main-content"
+      class="skip-to-content"
+      style="position: absolute; top: -100px; left: 16px"
+      >İçeriğe atla</a
+    >
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

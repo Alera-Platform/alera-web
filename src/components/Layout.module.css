@@ -1,0 +1,408 @@
+/* =============================================================================
+   Layout — responsive shell
+   ============================================================================= */
+
+.shell {
+  display: flex;
+  height: 100vh;
+  /* UI 7: şeffaf — body'deki ambient glow görünür kalsın.
+     Sidebar ve topbar kendi surface arka planlarını korur. */
+  background-color: transparent;
+}
+
+/* -----------------------------------------------------------------------------
+   Sidebar
+   ----------------------------------------------------------------------------- */
+.sidebar {
+  width: 240px;
+  flex-shrink: 0;
+  background-color: var(--color-bg-surface);
+  border-right: 1px solid var(--color-border-subtle);
+  display: flex;
+  flex-direction: column;
+  z-index: var(--z-sticky);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-5);
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.brandMark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background-color: var(--color-accent-subtle);
+  color: var(--color-accent);
+  border-radius: var(--radius-md);
+  flex-shrink: 0;
+}
+
+.brandText {
+  min-width: 0;
+}
+
+.brandName {
+  font-size: var(--text-md);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text-primary);
+  letter-spacing: -0.01em;
+}
+
+.brandSub {
+  font-size: var(--text-xs);
+  color: var(--color-text-tertiary);
+  margin-top: 1px;
+}
+
+.nav {
+  flex: 1;
+  padding: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow-y: auto;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  color: var(--color-text-secondary);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  text-decoration: none;
+  transition: all var(--duration-fast) var(--easing-standard);
+}
+
+.navItem:hover {
+  background-color: var(--color-bg-hover);
+  color: var(--color-text-primary);
+}
+
+.navItemActive {
+  background-color: var(--color-accent-subtle);
+  color: var(--color-accent);
+}
+
+.navItemActive:hover {
+  background-color: var(--color-accent-subtle);
+  color: var(--color-accent);
+}
+
+.navIcon {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.sidebarFooter {
+  padding: var(--space-3) var(--space-5);
+  border-top: 1px solid var(--color-border-subtle);
+}
+
+.connStatus {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-xs);
+  color: var(--color-text-tertiary);
+}
+
+.connDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.connOk {
+  background-color: var(--color-success);
+  box-shadow: 0 0 0 2px var(--color-success-subtle);
+}
+
+.connOff {
+  background-color: var(--color-text-disabled);
+}
+
+/* -----------------------------------------------------------------------------
+   Ana alan (topbar + content)
+   ----------------------------------------------------------------------------- */
+.main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Topbar */
+.topbar {
+  position: relative;
+  z-index: var(--z-overlay);
+  height: 60px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-6);
+  background-color: var(--color-bg-surface);
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.topbarLeft {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.pageTitle {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text-primary);
+  letter-spacing: -0.01em;
+}
+
+.topbarRight {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.iconButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-md);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--easing-standard);
+}
+
+.iconButton:hover {
+  background-color: var(--color-bg-hover);
+  color: var(--color-text-primary);
+}
+
+/* Hamburger — yalnızca mobil */
+.hamburger {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-md);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+}
+
+.hamburger:hover {
+  background-color: var(--color-bg-hover);
+}
+
+/* User menu */
+.userMenuWrap {
+  position: relative;
+}
+
+.userBtn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  height: 36px;
+  padding: 0 var(--space-2) 0 var(--space-1);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  color: var(--color-text-primary);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--easing-standard);
+}
+
+.userBtn:hover {
+  background-color: var(--color-bg-hover);
+}
+
+.avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background-color: var(--color-accent);
+  color: var(--color-accent-fg);
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+}
+
+.userName {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+}
+
+.userMenu {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  z-index: var(--z-modal);
+  min-width: 220px;
+  background-color: var(--color-bg-surface);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  animation: menuIn var(--duration-fast) var(--easing-decel);
+}
+
+@keyframes menuIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.userMenuHeader {
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.userMenuName {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text-primary);
+}
+
+.userMenuEmail {
+  margin-top: 2px;
+  font-size: var(--text-xs);
+  color: var(--color-text-tertiary);
+}
+
+.userMenuItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  padding: var(--space-2) var(--space-4);
+  background: transparent;
+  border: none;
+  color: var(--color-text-primary);
+  font-size: var(--text-sm);
+  cursor: pointer;
+  text-align: left;
+  transition: background-color var(--duration-fast) var(--easing-standard);
+}
+
+.userMenuItem:hover {
+  background-color: var(--color-bg-hover);
+}
+
+.userMenuItem svg {
+  color: var(--color-text-tertiary);
+}
+
+/* -----------------------------------------------------------------------------
+   Content
+   ----------------------------------------------------------------------------- */
+.content {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-6);
+  animation: contentFadeIn var(--duration-normal) var(--easing-standard);
+}
+
+@keyframes contentFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.content:focus {
+  outline: none;
+}
+
+/* Overlay (mobile drawer) */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgb(0 0 0 / 0.4);
+  z-index: var(--z-overlay);
+  animation: fadeIn var(--duration-fast) var(--easing-standard);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* =============================================================================
+   Responsive
+   ============================================================================= */
+
+@media (max-width: 767px) {
+  .hamburger {
+    display: inline-flex;
+  }
+
+  .sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    width: 280px;
+    transform: translateX(-100%);
+    transition: transform var(--duration-normal) var(--easing-standard);
+    z-index: var(--z-modal);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .sidebarOpen {
+    transform: translateX(0);
+  }
+
+  .topbar {
+    padding: 0 var(--space-4);
+    height: 56px;
+  }
+
+  .pageTitle {
+    font-size: var(--text-md);
+  }
+
+  .userName {
+    display: none;
+  }
+
+  .content {
+    padding: var(--space-4);
+  }
+}
+
+@media (max-width: 480px) {
+  .brandSub {
+    display: none;
+  }
+}

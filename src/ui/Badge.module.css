@@ -1,0 +1,60 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  border-radius: var(--radius-full);
+  font-weight: var(--weight-medium);
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.size_sm {
+  padding: 3px var(--space-2);
+  font-size: 11px;
+}
+
+.size_md {
+  padding: 4px var(--space-3);
+  font-size: var(--text-xs);
+}
+
+.icon {
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+.icon svg {
+  width: 12px;
+  height: 12px;
+}
+
+/* Varyantlar — subtle background + saturated text */
+.variant_neutral {
+  background-color: var(--color-bg-subtle);
+  color: var(--color-text-secondary);
+}
+
+.variant_info {
+  background-color: var(--color-info-subtle);
+  color: var(--color-info);
+}
+
+.variant_success {
+  background-color: var(--color-success-subtle);
+  color: var(--color-success);
+}
+
+.variant_warning {
+  background-color: var(--color-warning-subtle);
+  color: var(--color-warning);
+}
+
+.variant_danger {
+  background-color: var(--color-danger-subtle);
+  color: var(--color-danger);
+}
+
+.variant_accent {
+  background-color: var(--color-accent-subtle);
+  color: var(--color-accent);
+}

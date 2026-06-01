@@ -1,0 +1,320 @@
+/* =============================================================================
+   Dashboard — modern enterprise SaaS düzeni
+   ============================================================================= */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+/* -----------------------------------------------------------------------------
+   KPI kartları (filo özeti)
+   ----------------------------------------------------------------------------- */
+.statGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-4);
+}
+
+.statCard {
+  position: relative;
+  padding: var(--space-5);
+  background-color: var(--color-bg-surface);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-xs);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  transition: box-shadow var(--duration-fast) var(--easing-standard);
+}
+
+.statCard:hover {
+  box-shadow: var(--shadow-sm);
+}
+
+.statBar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 100%;
+  border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+}
+
+.statLabel {
+  font-size: var(--text-xs);
+  color: var(--color-text-tertiary);
+  font-weight: var(--weight-medium);
+}
+
+.statValue {
+  font-size: var(--text-3xl);
+  font-weight: var(--weight-semibold);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.statSub {
+  font-size: var(--text-xs);
+  color: var(--color-text-tertiary);
+}
+
+/* -----------------------------------------------------------------------------
+   Filo bölümü
+   ----------------------------------------------------------------------------- */
+.fleetSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.sectionTitle {
+  font-size: var(--text-md);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text-primary);
+  letter-spacing: -0.01em;
+}
+
+.fleetGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-3);
+}
+
+/* BUG 3: Yatay cihaz şeridi — yan yana, görünür scrollbar yok.
+   Wheel olayı JS ile yataya çevrilir (Dashboard.tsx). */
+.fleetTrack {
+  display: flex;
+  flex-direction: row;
+  gap: var(--space-3);
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  /* Scrollbar gizle — Firefox */
+  scrollbar-width: none;
+  /* Scrollbar gizle — IE/Edge eski */
+  -ms-overflow-style: none;
+  padding-bottom: var(--space-1);
+}
+
+/* Scrollbar gizle — WebKit (Chrome/Safari) */
+.fleetTrack::-webkit-scrollbar {
+  display: none;
+}
+
+/* Her cihaz penceresi sabit genişlikte, küçülmez */
+.fleetItem {
+  flex: 0 0 300px;
+  max-width: 300px;
+}
+
+/* -----------------------------------------------------------------------------
+   Ana grid: grafik + alarm akışı
+   ----------------------------------------------------------------------------- */
+.mainGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
+  gap: var(--space-4);
+}
+
+.chartPanel,
+.alarmPanel {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-bg-surface);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-xs);
+  overflow: hidden;
+}
+
+.panelHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.panelTitle {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text-primary);
+}
+
+.panelMeta {
+  font-size: var(--text-xs);
+  color: var(--color-text-tertiary);
+}
+
+/* Cihaz seçici (chart başlığı) */
+.deviceSelect {
+  height: 28px;
+  padding: 0 var(--space-3);
+  background-color: var(--color-bg-surface);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-primary);
+  font-size: var(--text-xs);
+  cursor: pointer;
+  transition: border-color var(--duration-fast) var(--easing-standard);
+}
+
+.deviceSelect:hover {
+  border-color: var(--color-border-strong);
+}
+
+.deviceSelect:focus {
+  outline: none;
+  border-color: var(--color-border-focus);
+  box-shadow: 0 0 0 3px var(--color-focus-ring);
+}
+
+/* Grafik gövdesi */
+.chartBody {
+  height: 280px;
+  padding: var(--space-4);
+}
+
+.emptyChart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: var(--space-3);
+  color: var(--color-text-tertiary);
+  text-align: center;
+}
+
+.emptyChart p {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  font-weight: var(--weight-medium);
+}
+
+.emptyChart span {
+  font-size: var(--text-xs);
+  max-width: 260px;
+  line-height: var(--leading-normal);
+}
+
+/* Grafik altı yorum şeridi */
+.chartFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-5);
+  border-top: 1px solid var(--color-border-subtle);
+  background-color: var(--color-bg-subtle);
+}
+
+.chartReading {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+}
+
+.chartHint {
+  font-size: var(--text-xs);
+  color: var(--color-text-tertiary);
+}
+
+/* -----------------------------------------------------------------------------
+   Alarm akışı paneli
+   ----------------------------------------------------------------------------- */
+.alarmFeed {
+  flex: 1;
+  overflow-y: auto;
+  max-height: 360px;
+  padding: var(--space-2);
+}
+
+.alarmRow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  transition: background-color var(--duration-fast) var(--easing-standard);
+}
+
+.alarmRow:hover {
+  background-color: var(--color-bg-hover);
+}
+
+.alarmRow + .alarmRow {
+  border-top: 1px solid var(--color-border-subtle);
+  border-radius: 0;
+}
+
+.alarmRowTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.alarmType {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-text-primary);
+}
+
+.alarmDesc {
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+  line-height: var(--leading-normal);
+}
+
+.alarmTime {
+  font-size: var(--text-xs);
+  color: var(--color-text-tertiary);
+  margin-top: var(--space-1);
+}
+
+.emptyFeed {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-8) var(--space-4);
+  text-align: center;
+  color: var(--color-text-tertiary);
+}
+
+.emptyFeed p {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-text-secondary);
+}
+
+.emptyFeed span {
+  margin-top: var(--space-1);
+  font-size: var(--text-xs);
+}
+
+/* =============================================================================
+   Responsive
+   ============================================================================= */
+
+@media (max-width: 1100px) {
+  .statGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .mainGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .statGrid {
+    grid-template-columns: 1fr;
+  }
+  .chartFooter {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-1);
+  }
+}

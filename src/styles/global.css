@@ -1,0 +1,573 @@
+/* =============================================================================
+   Alera — Tasarım Sistemi
+   ============================================================================
+   3 katman token hiyerarşisi:
+     Layer 1: Primitive   → ham renkler (OKLCH skala)
+     Layer 2: Semantic    → role-based isimler (bg, text, border, accent)
+     Layer 3: Component   → component-spesifik (--button-bg, --card-shadow)
+
+   Tema değişimi: yalnızca Layer 2 değişir, Layer 1 ve 3 sabit kalır.
+   Bu, scalable theming için endüstri standardı (Stripe, GitHub Primer pattern'i).
+   ============================================================================= */
+
+/* -----------------------------------------------------------------------------
+   LAYER 1 — Primitive Tokens (renk skalası)
+   OKLCH formatı: oklch(L C H) — algı-bazlı renk uzayı, ton geçişleri tutarlı.
+   ----------------------------------------------------------------------------- */
+:root {
+  /* Nötr (zinc-benzeri, çağdaş) */
+  --gray-0:   oklch(100% 0     0);
+  --gray-50:  oklch(98.5% 0.001 270);
+  --gray-100: oklch(96.5% 0.002 270);
+  --gray-200: oklch(92%   0.004 270);
+  --gray-300: oklch(86%   0.006 270);
+  --gray-400: oklch(70%   0.008 270);
+  --gray-500: oklch(55%   0.011 270);
+  --gray-600: oklch(42%   0.012 270);
+  --gray-700: oklch(32%   0.013 270);
+  --gray-800: oklch(22%   0.012 270);
+  --gray-850: oklch(18%   0.011 270);
+  --gray-900: oklch(14%   0.010 270);
+  --gray-950: oklch(10%   0.008 270);
+
+  /* Brand — saturated blue */
+  --brand-50:  oklch(97%   0.014 240);
+  --brand-100: oklch(93%   0.040 240);
+  --brand-200: oklch(85%   0.080 240);
+  --brand-400: oklch(68%   0.180 240);
+  --brand-500: oklch(58%   0.200 240);
+  --brand-600: oklch(50%   0.210 240);
+  --brand-700: oklch(42%   0.190 240);
+  --brand-900: oklch(28%   0.130 240);
+
+  /* Semantik renkler */
+  --green-100: oklch(94%   0.040 155);
+  --green-400: oklch(72%   0.170 155);
+  --green-500: oklch(62%   0.180 155);
+  --green-600: oklch(54%   0.170 155);
+
+  --amber-100: oklch(95%   0.050 75);
+  --amber-400: oklch(78%   0.160 75);
+  --amber-500: oklch(70%   0.170 75);
+  --amber-600: oklch(60%   0.160 75);
+
+  --red-100: oklch(94%    0.040 25);
+  --red-400: oklch(70%    0.190 25);
+  --red-500: oklch(62%    0.220 25);
+  --red-600: oklch(54%    0.210 25);
+  --red-700: oklch(46%    0.190 25);
+
+  /* -----------------------------------------------------------------------------
+     LAYER 3 — Component & Sistem Tokenları (tema-bağımsız)
+     ----------------------------------------------------------------------------- */
+
+  /* Tipografi */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, monospace;
+
+  --text-xs:   12px;
+  --text-sm:   13px;
+  --text-base: 14px;
+  --text-md:   15px;
+  --text-lg:   17px;
+  --text-xl:   20px;
+  --text-2xl:  24px;
+  --text-3xl:  32px;
+
+  --leading-tight:   1.25;
+  --leading-normal:  1.5;
+  --leading-relaxed: 1.65;
+
+  --weight-regular:  400;
+  --weight-medium:   500;
+  --weight-semibold: 600;
+  --weight-bold:     700;
+
+  /* Spacing (4px baz) */
+  --space-0:  0;
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* Radius */
+  --radius-xs:  4px;
+  --radius-sm:  6px;
+  --radius-md:  8px;
+  --radius-lg:  12px;
+  --radius-xl:  16px;
+  --radius-full: 9999px;
+
+  /* Z-index ölçeği */
+  --z-base:    0;
+  --z-raised:  10;
+  --z-sticky:  100;
+  --z-overlay: 1000;
+  --z-modal:   1100;
+  --z-toast:   1200;
+
+  /* Geçiş süreleri — tutarlı animasyon */
+  --duration-fast:   120ms;
+  --duration-normal: 180ms;
+  --duration-slow:   240ms;
+  --easing-standard: cubic-bezier(0.2, 0, 0.2, 1);
+  --easing-decel:    cubic-bezier(0, 0, 0.2, 1);
+}
+
+/* -----------------------------------------------------------------------------
+   LAYER 2 — Semantic Tokens (tema-bağımlı)
+   Bu blok dark/light arasında değişir, tüm component'ler bu değerleri kullanır.
+   ----------------------------------------------------------------------------- */
+
+/* LIGHT — Varsayılan (çoğu enterprise kullanıcısı tercih eder) */
+:root,
+:root[data-theme='light'] {
+  /* Yüzeyler — UI 8: net katman hiyerarşisi
+     canvas (en koyu, sayfa zemini) < subtle < surface (en açık, kartlar "yükselir")
+     Soft off-white kullanılıyor, sert beyaz değil. */
+  --color-bg-canvas:    oklch(97% 0.003 270);  /* sayfa zemini — yumuşak gri-beyaz */
+  --color-bg-surface:   var(--gray-0);          /* kartlar/paneller — temiz beyaz, öne çıkar */
+  --color-bg-subtle:    oklch(95% 0.004 270);   /* ara katman — sekme track, alt başlık */
+  --color-bg-hover:     oklch(94% 0.005 270);
+  --color-bg-active:    var(--gray-200);
+  --color-bg-inverse:   var(--gray-900);
+
+  /* Metin */
+  --color-text-primary:   var(--gray-900);
+  --color-text-secondary: var(--gray-600);
+  --color-text-tertiary:  var(--gray-500);
+  --color-text-disabled:  var(--gray-400);
+  --color-text-inverse:   var(--gray-0);
+  --color-text-brand:     var(--brand-600);
+
+  /* Kenarlıklar */
+  --color-border-subtle:  var(--gray-200);
+  --color-border-default: var(--gray-300);
+  --color-border-strong:  var(--gray-400);
+  --color-border-focus:   var(--brand-500);
+
+  /* Brand & Aksent */
+  --color-accent:         var(--brand-600);
+  --color-accent-hover:   var(--brand-700);
+  --color-accent-subtle:  var(--brand-50);
+  --color-accent-fg:      var(--gray-0);
+
+  /* Semantik durum */
+  --color-success:        var(--green-600);
+  --color-success-subtle: var(--green-100);
+  --color-warning:        var(--amber-600);
+  --color-warning-subtle: var(--amber-100);
+  --color-danger:         var(--red-600);
+  --color-danger-subtle:  var(--red-100);
+  --color-info:           var(--brand-600);
+  --color-info-subtle:    var(--brand-50);
+
+  /* Gölgeler */
+  --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.07), 0 1px 2px -1px rgb(0 0 0 / 0.07);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.10), 0 4px 6px -4px rgb(0 0 0 / 0.05);
+
+  /* Focus ring (aksen yarı şeffaf) */
+  --color-focus-ring: oklch(58% 0.200 240 / 0.35);
+
+  /* UI 7: Ambient glow — light tema (yumuşak, hafif) */
+  --glow-color-a: oklch(70% 0.140 240);  /* brand mavi */
+  --glow-color-b: oklch(72% 0.120 290);  /* hafif mor */
+  --glow-opacity: 0.10;
+}
+
+/* DARK — opsiyonel, kullanıcı seçer */
+:root[data-theme='dark'] {
+  --color-bg-canvas:    var(--gray-950);
+  --color-bg-surface:   var(--gray-900);
+  --color-bg-subtle:    var(--gray-850);
+  --color-bg-hover:     var(--gray-800);
+  --color-bg-active:    var(--gray-700);
+  --color-bg-inverse:   var(--gray-50);
+
+  --color-text-primary:   var(--gray-50);
+  --color-text-secondary: var(--gray-300);
+  --color-text-tertiary:  var(--gray-400);
+  --color-text-disabled:  var(--gray-600);
+  --color-text-inverse:   var(--gray-900);
+  --color-text-brand:     var(--brand-400);
+
+  --color-border-subtle:  var(--gray-800);
+  --color-border-default: var(--gray-700);
+  --color-border-strong:  var(--gray-600);
+  --color-border-focus:   var(--brand-400);
+
+  --color-accent:         var(--brand-500);
+  --color-accent-hover:   var(--brand-400);
+  --color-accent-subtle:  oklch(28% 0.130 240 / 0.3);
+  --color-accent-fg:      var(--gray-0);
+
+  --color-success:        var(--green-400);
+  --color-success-subtle: oklch(30% 0.080 155 / 0.3);
+  --color-warning:        var(--amber-400);
+  --color-warning-subtle: oklch(35% 0.080 75 / 0.3);
+  --color-danger:         var(--red-400);
+  --color-danger-subtle:  oklch(30% 0.090 25 / 0.3);
+  --color-info:           var(--brand-400);
+  --color-info-subtle:    oklch(28% 0.080 240 / 0.3);
+
+  --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.4), 0 1px 2px -1px rgb(0 0 0 / 0.4);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.5), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.6), 0 4px 6px -4px rgb(0 0 0 / 0.3);
+
+  --color-focus-ring: oklch(68% 0.180 240 / 0.45);
+
+  /* UI 7: Ambient glow — dark tema (daha doygun renk, kontrollü opacity) */
+  --glow-color-a: oklch(55% 0.180 240);  /* derin brand mavi */
+  --glow-color-b: oklch(50% 0.160 290);  /* derin mor */
+  --glow-opacity: 0.22;
+}
+
+/* =============================================================================
+   GERİYE DÖNÜK UYUMLULUK — Eski token isimleri yeni semantic tokenlara alias
+   =============================================================================
+   Sayfa CSS'leri Faz 5'te primitive'lere migrate edilirken bu alias'lar
+   kaldırılacak. Şimdilik MEVCUT CSS modülleri (~107 referans) çalışmaya
+   devam edecek.
+
+   Bu, "strangler fig" migration pattern'i — eski kod yaşamaya devam
+   ederken yeni kod aynı stilleri kullanır.
+   ============================================================================= */
+:root {
+  /* Eski yüzeyler → yeni semantic */
+  --bg-void:         var(--color-bg-canvas);
+  --bg-base:         var(--color-bg-canvas);
+  --bg-panel:        var(--color-bg-surface);
+  --bg-panel-raised: var(--color-bg-subtle);
+  --bg-hover:        var(--color-bg-hover);
+
+  /* Eski kenarlıklar */
+  --border-subtle:  var(--color-border-subtle);
+  --border-default: var(--color-border-default);
+  --border-strong:  var(--color-border-strong);
+
+  /* Eski metin */
+  --text-primary:   var(--color-text-primary);
+  --text-secondary: var(--color-text-secondary);
+  --text-muted:     var(--color-text-tertiary);
+  --text-dim:       var(--color-text-disabled);
+
+  /* Eski accent */
+  --accent:      var(--color-accent);
+  --accent-dim:  var(--color-accent-hover);
+  --accent-glow: var(--color-accent-subtle);
+
+  /* Eski status */
+  --status-ok:        var(--color-success);
+  --status-info:      var(--color-info);
+  --status-warn:      var(--color-warning);
+  --status-warn-glow: var(--color-warning-subtle);
+  --status-crit:      var(--color-danger);
+  --status-crit-glow: var(--color-danger-subtle);
+
+  /* Eski severity */
+  --sev-low:      var(--color-info);
+  --sev-medium:   var(--color-warning);
+  --sev-high:     var(--amber-600);
+  --sev-critical: var(--color-danger);
+
+  /* Eski tipografi — yeni font ile aynı */
+  --font-display: var(--font-sans);
+  --font-body:    var(--font-sans);
+
+  /* Eski radius */
+  --radius: var(--radius-md);
+
+  /* Eski gölgeler */
+  --shadow-panel:  var(--shadow-sm);
+  --shadow-raised: var(--shadow-md);
+}
+
+/* =============================================================================
+   Reset + Base
+   ============================================================================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html.no-transitions,
+html.no-transitions *,
+html.no-transitions *::before,
+html.no-transitions *::after {
+  transition: none !important;
+  animation: none !important;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  background-color: var(--color-bg-canvas);
+  color: var(--color-text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color var(--duration-normal) var(--easing-standard),
+              color var(--duration-normal) var(--easing-standard);
+}
+
+/* =============================================================================
+   UI 7 — Ambient background glow (tüm sayfalar)
+   =============================================================================
+   Sabit (fixed) konumda, blur'lu iki radyal gradient. Sayfa zemininin
+   düz görünmesini engeller, panel/kartların "yükselmiş" hissini güçlendirir.
+   İçeriğin ARKASINDA kalır (z-index: -1), etkileşimi engellemez.
+   Tema-bağımlı renk yoğunluğu — aşağıda data-theme ile ayarlanır. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      ellipse 70% 55% at 18% 12%,
+      var(--glow-color-a),
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 60% 50% at 85% 100%,
+      var(--glow-color-b),
+      transparent 60%
+    );
+  filter: blur(60px);
+  opacity: var(--glow-opacity);
+  transition: opacity var(--duration-slow) var(--easing-standard);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: inherit;
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-tight);
+  letter-spacing: -0.01em;
+}
+
+h1 { font-size: var(--text-3xl); }
+h2 { font-size: var(--text-2xl); }
+h3 { font-size: var(--text-xl); }
+h4 { font-size: var(--text-lg); }
+
+a {
+  color: var(--color-text-brand);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+button, input, select, textarea {
+  font: inherit;
+  color: inherit;
+}
+
+/* Hareket azaltma desteği — a11y */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Focus ring — klavye-erişilebilir */
+:focus-visible {
+  outline: 2px solid var(--color-border-focus);
+  outline-offset: 2px;
+  border-radius: var(--radius-xs);
+}
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Skip link — a11y */
+.skip-to-content {
+  position: absolute;
+  top: -100px;
+  left: var(--space-4);
+  z-index: var(--z-modal);
+  padding: var(--space-2) var(--space-4);
+  background: var(--color-accent);
+  color: var(--color-accent-fg);
+  border-radius: var(--radius-md);
+  font-weight: var(--weight-medium);
+}
+.skip-to-content:focus {
+  top: var(--space-4) !important;
+}
+
+/* Scrollbar (modern, ince) */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border-default) transparent;
+}
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  background: var(--color-border-default);
+  border-radius: var(--radius-full);
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--color-border-strong);
+}
+
+/* =============================================================================
+   Geçici Utility Classes — eski sayfalar primitive'lere migrate edilene kadar
+   =============================================================================
+   Bu blok mevcut JSX'lerin (`<button className="btn btn-primary">`) görsel
+   olarak yeni tasarım sistemiyle uyumlu görünmesini sağlar. Faz 5 sonrası
+   tüm sayfalar <Button /> primitive'ine geçince bu blok silinecek.
+   ============================================================================= */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  height: 36px;
+  padding: 0 var(--space-4);
+  background-color: var(--color-bg-surface);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  cursor: pointer;
+  white-space: nowrap;
+  text-decoration: none;
+  transition:
+    background-color var(--duration-fast) var(--easing-standard),
+    border-color var(--duration-fast) var(--easing-standard);
+}
+.btn:hover:not(:disabled) {
+  background-color: var(--color-bg-hover);
+  border-color: var(--color-border-strong);
+}
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.btn:not(:disabled):active {
+  transform: translateY(1px);
+}
+
+.btn-primary {
+  background-color: var(--color-accent);
+  color: var(--color-accent-fg);
+  border-color: var(--color-accent);
+}
+.btn-primary:hover:not(:disabled) {
+  background-color: var(--color-accent-hover);
+  border-color: var(--color-accent-hover);
+}
+
+.btn-danger {
+  background-color: var(--color-danger);
+  color: var(--color-text-inverse);
+  border-color: var(--color-danger);
+}
+.btn-danger:hover:not(:disabled) {
+  filter: brightness(0.92);
+}
+
+.btn-sm {
+  height: 28px;
+  padding: 0 var(--space-3);
+  font-size: var(--text-xs);
+}
+
+.panel {
+  background-color: var(--color-bg-surface);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-xs);
+}
+
+.spinner {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--color-border-default);
+  border-top-color: var(--color-accent);
+  border-radius: 50%;
+  animation: legacy-spin 0.7s linear infinite;
+}
+
+@keyframes legacy-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.pulse-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--color-success);
+  box-shadow: 0 0 0 0 oklch(62% 0.180 155 / 0.5);
+  animation: pulse 2s ease-out infinite;
+}
+
+.pulse-dot.warn {
+  background-color: var(--color-warning);
+  box-shadow: 0 0 0 0 oklch(70% 0.170 75 / 0.5);
+}
+
+.pulse-dot.offline {
+  background-color: var(--color-text-disabled);
+  box-shadow: none;
+  animation: none;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 currentColor;
+  }
+  100% {
+    box-shadow: 0 0 0 10px transparent;
+  }
+}
+
+/* Flash-in — yeni alarm bildirimleri için */
+@keyframes flash-in {
+  0% {
+    background-color: var(--color-warning-subtle);
+  }
+  100% {
+    background-color: transparent;
+  }
+}

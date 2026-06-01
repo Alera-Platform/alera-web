@@ -1,0 +1,71 @@
+.card {
+  background-color: var(--color-bg-surface);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  transition: border-color var(--duration-fast) var(--easing-standard);
+}
+
+.variant_default {
+  box-shadow: var(--shadow-xs);
+}
+
+.variant_subtle {
+  background-color: var(--color-bg-subtle);
+  border-color: transparent;
+}
+
+.variant_outlined {
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.padded {
+  padding: var(--space-5);
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.headerText {
+  flex: 1;
+  min-width: 0;
+}
+
+.title {
+  font-size: var(--text-md);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text-primary);
+  line-height: var(--leading-tight);
+}
+
+.subtitle {
+  margin-top: var(--space-1);
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+}
+
+.action {
+  flex-shrink: 0;
+}
+
+.body {
+  padding: var(--space-5);
+}
+
+.footer {
+  padding: var(--space-3) var(--space-5);
+  border-top: 1px solid var(--color-border-subtle);
+  background-color: var(--color-bg-subtle);
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+}
+
+/* Card.Body bir başlığa kadar tek başına ise üst radius'u koru */
+.header + .body {
+  /* padding header'dan miras */
+}

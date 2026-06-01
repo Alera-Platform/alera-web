@@ -1,0 +1,8 @@
+<svg width="64" height="64" viewBox="0 0 184 184" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <title>Alera</title>
+  <rect width="184" height="184" rx="40" fill="#0d1525"/>
+  <circle cx="92" cy="92" r="82.8" stroke="#6fa8ff" stroke-width="3.68" opacity="0.25" fill="none"/>
+  <path opacity="0.15" d="M92 46C64.4 46 46 64.4 46 92C46 128.8 92 156.4 92 156.4C92 156.4 138 128.8 138 92C138 64.4 119.6 46 92 46Z" fill="#6fa8ff"/>
+  <path d="M92 36.8V147.2M36.8 92H147.2" stroke="#6fa8ff" stroke-width="3.68" stroke-linecap="round" opacity="0.4"/>
+  <path d="M92 55.2V128.8M55.2 92H128.8" stroke="#6fa8ff" stroke-width="14.72" stroke-linecap="round"/>
+</svg>
