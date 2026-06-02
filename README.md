@@ -5,7 +5,7 @@
 
 Backend'in (ayrı repo) sunduğu REST API ve Socket.IO akışını görselleştiren gerçek zamanlı kontrol paneli.
 
-## 🧱 Teknoloji Yığını
+## Teknoloji Yığını
 
 | Katman | Teknoloji |
 |--------|-----------|
